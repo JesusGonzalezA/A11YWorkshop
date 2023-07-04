@@ -62,12 +62,12 @@ const setUpExperience = () => {
     overlay.style.display = "flex";
     eatBtn.style.display = "none";
     overlayBtn.focus();
-    unsetNormativeExperience();
+    unSetPersonaExperience();
   };
   overlayBtn.onclick = () => {
     overlay.style.display = "none";
     eatBtn.style.display = "initial";
-    setUpNormativeExperience();
+    setUpPersonaExperience();
   };
 };
 
