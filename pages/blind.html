@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A11Y Workshop</title>
+    <link href="/styles/main.css" rel="stylesheet" />
+    <script src="/main.js"></script>
+    <script src="/experiences/normative.js"></script>
+</head>
+<body>
+    <header>
+        <button id="skip_content">Skip to main content</button>
+        <h1 class="text_centered">Donut on a string</h1>
+        <nav aria-label="Main navigation" id="nav_menu">
+            <ol>
+                <li>
+                    <a href="/index.html">Main page</a>
+                </li>
+                <li>
+                    <a href="/pages/normative.html">Normative body experience</a>
+                </li>
+                <li>
+                    <a href="/pages/wheel_chair.html">Wheel chair experience</a>
+                </li>
+                <li>
+                    <a href="/pages/blind.html" aria-current="page">Blind experience</a>
+                </li>
+            </ol>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Blind persona</h2>
+        <div role="switch" aria-checked="false" tabindex="0">
+            <span class="label">Simulation</span>
+            <span class="switch">
+                <span></span>
+            </span>
+            <span class="on" aria-hidden="true">On</span>
+            <span class="off" aria-hidden="true">Off</span>
+        </div>
+        
+        <div role="switch" aria-checked="false" tabindex="0">
+            <span class="label">Accessible experience</span>
+            <span class="switch">
+                <span></span>
+            </span>
+            <span class="on" aria-hidden="true">On</span>
+            <span class="off" aria-hidden="true">Off</span>
+        </div>
+        
+        <div id="experience">
+            <div class="experience_border" aria-hidden="true"></div>
+            <div id="img_container">
+                <img src="/assets/room.png" id="room" alt="Room">
+                <button id="eat_btn" title="Eat the donut"></button>
+                <img src="/assets/homer.png" id="eater" alt="Homer Simpson watering">
+                <div id="overlay">
+                    <button>Replay <span aria-hidden="true">🔄</span></button>
+                </div>
+            </div>
+            <div class="experience_border" aria-hidden="true"></div>
+        </div>
+    </main>
+
+    <footer>
+        <p class="text_centered">2023 - Jesús González Álvarez</p>
+    </footer>
+</body>
+</html>
