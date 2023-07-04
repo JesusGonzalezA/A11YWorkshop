@@ -83,15 +83,15 @@ const confettiEffect = () => {
 }
 
 const announceWin = () => {
+  const liveRegion = document.getElementById("live_region");
   const alert = document.createElement('p')
   alert.textContent = "You are the winner!";
-  alert.role = "alert";
 
   setTimeout(() => {
       alert.remove();
   }, 1000);
 
-  document.body.appendChild(alert);
+  liveRegion.appendChild(alert);
 }
 
 const winEffect = () => {
