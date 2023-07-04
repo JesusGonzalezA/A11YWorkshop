@@ -17,6 +17,12 @@
 html, body {
     margin: 0;
     padding: 0;
+    
+    overflow-x: hidden;
+}
+
+canvas {
+    background: transparent;
 }
 
 h1 {
@@ -221,5 +227,4 @@ main {
     cursor: pointer;
     border-color: var(--color-primary);
   }
-  
   

@@ -1,6 +1,8 @@
 class Switch {
-  constructor(domNode) {
+  constructor(domNode, callback, resetCallback) {
     this.switchNode = domNode;
+    this.callback = callback;
+    this.resetCallback = resetCallback;
     this.switchNode.addEventListener("click", () => this.toggleStatus());
     this.switchNode.addEventListener("keydown", (event) =>
       this.handleKeydown(event)
@@ -20,16 +22,112 @@ class Switch {
     const currentState =
       this.switchNode.getAttribute("aria-checked") === "true";
     const newState = String(!currentState);
+    
+    if (newState === "true") {
+      this.callback();
+    } else {
+      this.resetCallback();
+    }
 
     this.switchNode.setAttribute("aria-checked", newState);
   }
 }
 
+let accessibilitySwitch, simulationSwitch;
+
 const setUpSwitches = () => {
-  Array.from(document.querySelectorAll("[role^=switch]")).forEach(
-    (element) => new Switch(element)
-  );
+  const simulationSwitchNode = document.getElementById("switch_simulation");
+  const accessibilitySwitchNode = document.getElementById("switch_accessible");
+
+  if (simulationSwitchNode && accessibilitySwitchNode)
+  {
+    simulationSwitch = new Switch(simulationSwitchNode, simulation.on, simulation.off);
+    accessibilitySwitch = new Switch(accessibilitySwitchNode, accessible.on, accessible.off);
+  }
 };
+
+const confettiEffect = () => {
+  const defaults = {
+    spread: 360,
+    ticks: 100,
+    gravity: 0,
+    decay: 0.94,
+    startVelocity: 30,
+  };
+  
+  function shoot() {
+    confetti({
+      ...defaults,
+      particleCount: 50,
+      scalar: 1.2,
+      shapes: ["circle", "square"],
+      colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"],
+    });
+  
+    confetti({
+      ...defaults,
+      particleCount: 50,
+      scalar: 2,
+      shapes: ["text"],
+      shapeOptions: {
+        text: {
+          value: ["🦄", "🌈"],
+        },
+      },
+    });
+  }
+  
+  setTimeout(shoot, 0);
+  setTimeout(shoot, 100);
+  setTimeout(shoot, 200);
+}
+
+const announceWin = () => {
+  const alert = document.createElement('p')
+  alert.textContent = "You are the winner!";
+  alert.role = "alert";
+
+  setTimeout(() => {
+      alert.remove();
+  }, 1000);
+
+  document.body.appendChild(alert);
+}
+
+const winEffect = () => {
+  confettiEffect();
+}
+
+const onEatBtnClick = () => {
+  const eatBtn = document.getElementById("eat_btn");
+  const overlay = document.getElementById("overlay");
+  const overlayBtn = document.querySelector("#overlay button");
+  
+  overlay.style.display = "flex";
+  eatBtn.style.display = "none";
+  overlayBtn.focus();
+  winEffect();
+  announceWin();
+  unsetExperience();
+
+  if (accessibilitySwitch?.switchNode.getAttribute("aria-checked") === "true")
+  {
+    accessibilitySwitch.resetCallback();
+  }
+}
+
+const onPointerMove = (ev) => {
+  const imgContainer = document.getElementById("img_container");
+  const eater = document.getElementById("eater");
+  const initialX = imgContainer.getBoundingClientRect().x;
+  const eaterWidth = eater.getBoundingClientRect().width;
+  eater.style.left = `${ev.clientX - eaterWidth / 2 - initialX}px`;
+};
+
+const unsetExperience = () => {
+  const imgContainer = document.getElementById("img_container");
+  imgContainer.removeEventListener("pointermove", onPointerMove);
+}
 
 const setUpExperience = () => {
   const experience = document.getElementById("experience");
@@ -55,19 +153,20 @@ const setUpExperience = () => {
   eatBtn.style.top = `${coordY - radius}px`;
   eatBtn.style.left = `${coordX - radius}px`;
 
+  imgContainer.addEventListener("pointermove", onPointerMove);
   eatBtn.addEventListener("focus", () => {
     eater.style.left = `${finalX - eaterWidth - initialX}px`;
   });
-  eatBtn.onclick = () => {
-    overlay.style.display = "flex";
-    eatBtn.style.display = "none";
-    overlayBtn.focus();
-    unSetPersonaExperience();
-  };
+  eatBtn.addEventListener("click", onEatBtnClick);
+
   overlayBtn.onclick = () => {
     overlay.style.display = "none";
     eatBtn.style.display = "initial";
-    setUpPersonaExperience();
+    setUpExperience();
+    if (accessibilitySwitch?.switchNode.getAttribute("aria-checked") === "true")
+    {
+      accessibilitySwitch.callback();
+    }
   };
 };
 

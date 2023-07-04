@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A11Y Workshop</title>
     <link href="/styles/main.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles-confetti@2.10.1/tsparticles.confetti.bundle.min.js"></script>
     <script src="/experiences/wheel_chair.js"></script>
     <script src="/main.js"></script>
 </head>
@@ -19,10 +20,10 @@
                     <a href="/index.html">Main page</a>
                 </li>
                 <li>
-                    <a href="/pages/normative.html" aria-current="page">Normative body experience</a>
+                    <a href="/pages/normative.html">Normative body experience</a>
                 </li>
                 <li>
-                    <a href="/pages/wheel_chair.html">Wheel chair experience</a>
+                    <a href="/pages/wheel_chair.html" aria-current="page">Wheel chair experience</a>
                 </li>
                 <li>
                     <a href="/pages/blind.html">Blind experience</a>
@@ -33,7 +34,7 @@
 
     <main>
         <h2>Normative body</h2>
-        <div role="switch" aria-checked="false" tabindex="0">
+        <div role="switch" id="switch_simulation" aria-checked="false" tabindex="0">
             <span class="label">Simulation</span>
             <span class="switch">
                 <span></span>
@@ -42,7 +43,7 @@
             <span class="off" aria-hidden="true">Off</span>
         </div>
         
-        <div role="switch" aria-checked="false" tabindex="0">
+        <div role="switch" id="switch_accessible" aria-checked="false" tabindex="0">
             <span class="label">Accessible experience</span>
             <span class="switch">
                 <span></span>
@@ -55,7 +56,7 @@
             <div class="experience_border" aria-hidden="true"></div>
             <div id="img_container">
                 <img src="/assets/room.png" id="room" alt="Room">
-                <button id="eat_btn" title="Eat the donut"></button>
+                <button tabindex="-1" id="eat_btn" title="Eat the donut"></button>
                 <img src="/assets/homer.png" id="eater" alt="Homer Simpson watering">
                 <div id="overlay">
                     <button>Replay <span aria-hidden="true">🔄</span></button>
