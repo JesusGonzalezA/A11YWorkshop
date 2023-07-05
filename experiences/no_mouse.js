@@ -6,10 +6,10 @@ const onKeyPress = (ev) => {
   const finalX = initialX + imgContainer.getBoundingClientRect().width;
   let position = eater.getBoundingClientRect().x;
 
-  if (ev.key === "d" && position < finalX)
+  if ((ev.key === "d" || ev.key === "ArrowRight") && position < finalX)
   {
     position += 10;
-  } else if (ev.key === "a" && position > initialX) {
+  } else if ((ev.key === "a" || ev.key === "ArrowLeft") && position > initialX) {
     position -= 10;
   }
   
@@ -24,11 +24,11 @@ const unSetPersonaExperience = () => {
   const eater = document.getElementById("eater");
 
   eater.style.left = "0px";
-  window.removeEventListener("keypress", onKeyPress);
+  window.removeEventListener("keydown", onKeyPress);
 };
 
 const setUpPersonaExperience = () => {
-  window.addEventListener("keypress", onKeyPress);
+  window.addEventListener("keydown", onKeyPress);
 };
 
 const simulation = {
